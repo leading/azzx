@@ -64,6 +64,19 @@ export default async function handler(req: NextRequest) {
 
     // Clone the response and modify its headers
     const modifiedResponse = new Response(response.body, response);
+    // Add CORS headers
+    modifiedResponse.headers.set('Access-Control-Allow-Origin', '*'); // Allow all origins
+    modifiedResponse.headers.set(
+      'Access-Control-Allow-Methods',
+      'GET, POST, PUT, DELETE, OPTIONS'
+    ); // Allow specific HTTP methods
+    modifiedResponse.headers.set(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization'
+    ); // Allow specific headers
+    modifiedResponse.headers.set('Access-Control-Expose-Headers', '*'); // Expose all headers to the client
+
+    
     modifiedResponse.headers.delete('cf-ray');
     modifiedResponse.headers.delete('cf-cache-status');
     modifiedResponse.headers.delete('report-to');
